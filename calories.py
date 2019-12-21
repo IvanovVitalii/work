@@ -1,18 +1,21 @@
 class Human:
-    def __init__(self, sex=None, weight=None, height=None, age=None):
+    def __init__(self, activity=None, sex=None, weight=None, height=None, age=None):
+        self._activity = activity
         self._sex = sex
         self._weight = weight
         self._height = height
         self._age = age
 
-    def calculation_calories(self, sex, weight, height, age):
+    # считаем калории
+    def calculation_calories(self, activity, sex, weight, height, age):
         if sex == 'м':
-            bmr = 88.36 + 13.4 * weight + 4.8 * height - 5.7 * age
+            bmr = activity * (88.36 + 13.4 * weight + 4.8 * height - 5.7 * age)
             return bmr
         elif sex == 'ж':
-            bmr = 447.6 + 9.2 * weight + 3.1 * height - 4.3 * age
+            bmr = activity * (447.6 + 9.2 * weight + 3.1 * height - 4.3 * age)
             return bmr
 
+    # указываем пол
     def set_sex(self, value):
         if value == 'м' or value == 'ж':
             self._sex = value
@@ -22,6 +25,7 @@ class Human:
             print('Неверно указан пол. Повторите.')
             return self._sex
 
+    # указываем вес
     def set_weight(self, value):
         try:
             value = float(value)
@@ -32,6 +36,7 @@ class Human:
             self._weight = None
             return self._weight
 
+    # указываем рост
     def set_height(self, value):
         try:
             value = float(value)
@@ -47,6 +52,7 @@ class Human:
             self._height = None
             return self._height
 
+    # указываем возраст
     def set_age(self, value):
         try:
             value = float(value)
@@ -63,6 +69,7 @@ class Human:
             return self._age
 
 
+# интерфейс программы
 while True:
     user = Human()
 
@@ -87,6 +94,7 @@ while True:
                 age = input('Введите возраст, полных лет: ')
                 user.set_age(age)
 
+# TO DO: создать метод set_activity()
             while True:
                 print('')
                 list_activity = [1.2, 1.375, 1.55, 1.725, 1.9]
@@ -106,14 +114,9 @@ while True:
                 except ValueError:
                     print('Неверный выбор. Повторите.')
 
-
-
-
-
-            calories = activity * (user.calculation_calories(user._sex, user._weight, user._height, user._age)) // 1
+            calories = user.calculation_calories(activity, user._sex, user._weight, user._height, user._age) // 1
             print(f'Норма калорий: {int(calories)}')
             print('')
-
 
         elif com1 == 0:
             break
